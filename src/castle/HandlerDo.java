@@ -1,15 +1,18 @@
 package castle;
 
-public class HandlerDo extends Handler{
+public class HandlerDo extends Handler {
 
-	public HandlerDo(Game game) {
-		super(game);
+	private HandlerDoInterface doInterface = null;
+	
+	public HandlerDo setDoInterface(HandlerDoInterface doInterface) {
+		this.doInterface = doInterface;
+		return this;
 	}
 
 	@Override
 	public void doCmd(String word) {
-		game.goRoom(word);
+		if (doInterface != null) {
+			doInterface.doSomething();
+		}
 	}
-	
-	
 }

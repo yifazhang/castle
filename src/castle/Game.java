@@ -8,12 +8,19 @@ import java.util.Scanner;
 public class Game {
     private Room currentRoom;
     private HashMap<String, Handler> handlers = new HashMap<String, Handler>();
+    private String value = "";
     
     public Game() 
     {
-    		handlers.put("bye", new HandlerBye(this));
-    		handlers.put("help", new HandlerHelp(this));
-    		handlers.put("go", new HandlerDo(this));
+    		handlers.put("bye", new HandlerBye());
+    		handlers.put("help", new HandlerHelp());
+    		handlers.put("go", new HandlerDo().setDoInterface(new HandlerDoInterface() {
+				
+				@Override
+				public void doSomething() {
+					goRoom(value);
+				}
+			}));
         createRooms();
     }
 
@@ -37,8 +44,6 @@ public class Game {
         study.setExit("north",outside);
         study.setExit("east",bedroom);
         bedroom.setExit("east",study);
-        lobby.setExit("up",pub);
-        pub.setExit("down",lobby);
 
         currentRoom = outside;  //	从城堡门外开始
     }
@@ -53,7 +58,7 @@ public class Game {
     }
 
     // 以下为用户命令
-    public void goRoom(String direction) 
+    private void goRoom(String direction) 
     {
         Room nextRoom = currentRoom.getExit(direction);
 
@@ -70,7 +75,6 @@ public class Game {
         System.out.println("你在" + currentRoom);
         System.out.print("出口有: ");
         System.out.println(currentRoom.getExitDesc());
-        System.out.println();
     }
 
     public void play() {
@@ -79,7 +83,7 @@ public class Game {
             String line = in.nextLine();
             String[] words = line.split(" ");
             Handler handler = handlers.get(words[0]);
-            String value = "";
+            
             if (words.length > 1) {
 				value = words[1];
 			}
@@ -89,13 +93,6 @@ public class Game {
 					break;
 				}
 			} 
-//            if ( words[0].equals("help") ) {
-//                printHelp();
-//            } else if (words[0].equals("go") ) {
-//                goRoom(words[1]);
-//            } else if ( words[0].equals("bye") ) {
-//                break;
-//            }
         }
         
         in.close();
@@ -106,7 +103,6 @@ public class Game {
 		game.printWelcome();
         game.play();
         System.out.println("感谢您的光临。再见！");
-        
 	}
 
 }
