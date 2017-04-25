@@ -44,7 +44,9 @@ public class Game {
         study.setExit("north",outside);
         study.setExit("east",bedroom);
         bedroom.setExit("east",study);
-
+        	lobby.setExit("up", pub);
+        	pub.setExit("down", lobby);
+        
         currentRoom = outside;  //	从城堡门外开始
     }
 
