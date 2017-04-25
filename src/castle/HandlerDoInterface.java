@@ -1,5 +1,5 @@
 package castle;
 
 public interface HandlerDoInterface {
-	void doSomething();
+	void doSomething(String value);
 }

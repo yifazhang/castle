@@ -12,7 +12,7 @@ public class HandlerDo extends Handler {
 	@Override
 	public void doCmd(String word) {
 		if (doInterface != null) {
-			doInterface.doSomething();
+			doInterface.doSomething(word);
 		}
 	}
 }

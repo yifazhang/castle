@@ -8,8 +8,7 @@ import java.util.Scanner;
 public class Game {
     private Room currentRoom;
     private HashMap<String, Handler> handlers = new HashMap<String, Handler>();
-    private String value = "";
-    
+
     public Game() 
     {
     		handlers.put("bye", new HandlerBye());
@@ -17,7 +16,7 @@ public class Game {
     		handlers.put("go", new HandlerDo().setDoInterface(new HandlerDoInterface() {
 				
 				@Override
-				public void doSomething() {
+				public void doSomething(String value) {
 					goRoom(value);
 				}
 			}));
@@ -85,7 +84,7 @@ public class Game {
             String line = in.nextLine();
             String[] words = line.split(" ");
             Handler handler = handlers.get(words[0]);
-            
+            String value = "";
             if (words.length > 1) {
 				value = words[1];
 			}
